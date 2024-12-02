@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mealie-config
+  namespace: mealie
+data:
+  ALLOW_SIGNUP: "false"
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Anchorage"
+  BASE_URL: "https://mealie.yourdomain.com"
+  DB_ENGINE: "postgres"
+  POSTGRES_SERVER: "your-remote-postgres-server"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "mealie-db"

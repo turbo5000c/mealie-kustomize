@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mealie
+  namespace: mealie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mealie
+  template:
+    metadata:
+      labels:
+        app: mealie
+    spec:
+      containers:
+        - name: mealie
+          image: ghcr.io/mealie-recipes/mealie:v2.3.0
+          ports:
+            - containerPort: 9000
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-database-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-database-secret
+                  key: POSTGRES_PASSWORD
+            - name: ALLOW_SIGNUP
+              valueFrom:
+                configMapKeyRef:
+                  name: mealie-config
+                  key: ALLOW_SIGNUP
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: mealie-config
+                  key: TZ
+            - name: BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mealie-config
+                  key: BASE_URL
+            - name: DB_ENGINE
+              valueFrom:
+                configMapKeyRef:
+                  name: mealie-config
+                  key: DB_ENGINE
+            - name: POSTGRES_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: mealie-config
+                  key: POSTGRES_SERVER
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mealie-config
+                  key: POSTGRES_PORT
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mealie-config
+                  key: POSTGRES_DB
+          volumeMounts:
+            - name: mealie-data
+              mountPath: /app/data/
+      volumes:
+        - name: mealie-data
+          persistentVolumeClaim:
+            claimName: mealie-data
