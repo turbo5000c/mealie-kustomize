@@ -5,9 +5,9 @@
   ],
   "regexManagers": [
     {
-      "fileMatch": ["deployment.yaml"], 
+      "fileMatch": ["(^|/|\\\\)deployment\\.ya?ml$"],
       "matchStrings": [
-        "image:\\s(?<depName>.*):(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "image:\\s*\"?(?<depName>[\\w./-]+):(?<currentValue>v?\\d+\\.\\d+\\.\\d+(?:[-._][0-9A-Za-z.]+)?)\"?"
       ],
       "datasourceTemplate": "docker",
       "versioningTemplate": "docker"
