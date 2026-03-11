@@ -1,3 +1,6 @@
+# PersistentVolumeClaim for Mealie application data.
+# Mealie stores recipe media, exports, and (when using SQLite) the database here.
+# Requires a StorageClass that supports ReadWriteOnce (most clusters provide one by default).
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -8,4 +11,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
+      # Increase this if you have a large recipe collection with many images.
       storage: 5Gi

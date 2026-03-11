@@ -1,0 +1,38 @@
+---
+# FluxCD Kustomization — instructs Flux to apply the mealie manifests from the
+# GitRepository defined in gitrepository.yaml.
+# Apply this to your Flux management cluster (e.g. clusters/my-cluster/mealie/).
+#
+# Docs: https://fluxcd.io/flux/components/kustomize/kustomizations/
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mealie
+  namespace: flux-system
+spec:
+  interval: 10m
+  # The GitRepository source defined in gitrepository.yaml
+  sourceRef:
+    kind: GitRepository
+    name: mealie-kustomize
+  # Path inside the repository that contains kustomization.yaml
+  path: "./"
+  # Automatically create the target namespace if it does not exist
+  targetNamespace: mealie
+  # Apply server-side apply for better conflict detection
+  force: false
+  # Automatically delete resources removed from the source
+  prune: true
+  # Wait for all resources to be ready before marking the Kustomization healthy
+  wait: true
+  timeout: 5m
+  # IMPORTANT: Before enabling this Kustomization, ensure the database Secret
+  # already exists in the mealie namespace. Create it with:
+  #
+  #   kubectl apply -f examples/secret.yaml   (after filling in real values)
+  #
+  # Alternatively, use an External Secrets Operator or Sealed Secrets reference
+  # and add it as a dependsOn entry below.
+  #
+  # dependsOn:
+  #   - name: mealie-secrets   # name of another Kustomization that creates the Secret

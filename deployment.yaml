@@ -4,6 +4,8 @@ metadata:
   name: mealie
   namespace: mealie
 spec:
+  # Mealie does not support active/active multi-replica with SQLite.
+  # For PostgreSQL deployments, you may increase replicas, but check upstream docs first.
   replicas: 1
   selector:
     matchLabels:
@@ -15,10 +17,14 @@ spec:
     spec:
       containers:
         - name: mealie
+          # Image version is managed by Renovate (renovate.json).
+          # To pin manually, replace the tag with the desired version, e.g. v2.8.0.
+          # Releases: https://github.com/mealie-recipes/mealie/releases
           image: ghcr.io/mealie-recipes/mealie:v3.12.0
           ports:
             - containerPort: 9000
           env:
+            # --- Database credentials (from Secret) ---
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -29,6 +35,7 @@ spec:
                 secretKeyRef:
                   name: mealie-database-secret
                   key: POSTGRES_PASSWORD
+            # --- Application configuration (from ConfigMap) ---
             - name: ALLOW_SIGNUP
               valueFrom:
                 configMapKeyRef:
