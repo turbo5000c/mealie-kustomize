@@ -1,18 +1,18 @@
 ---
 # FluxCD GitRepository — points Flux at the mealie-kustomize source repository.
-# Apply this to your Flux management cluster (e.g. clusters/my-cluster/mealie/).
+# Apply this to your Flux management cluster alongside flux/kustomization.yaml.
+# This file is also consumed by dawg-io/fluxcd-ezy as the GitRepository source for mealie.
 #
 # Docs: https://fluxcd.io/flux/components/source/gitrepositories/
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: mealie-kustomize
-  # Change this namespace if your Flux components live elsewhere
   namespace: flux-system
 spec:
   interval: 1h
   url: https://github.com/turbo5000c/mealie-kustomize
   ref:
-    # Pin to a specific branch, tag, or commit SHA.
-    # Use a tag for a stable, reproducible deployment.
+    # Tracking main branch until git tags are introduced.
+    # When tags are added, switch to: semver: ">=0.0.0"
     branch: main
