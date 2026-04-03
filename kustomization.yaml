@@ -4,7 +4,7 @@ namespace: mealie
 
 resources:
   - namespace.yaml
-  - configmap.yaml
+  #- configmap.yaml
   # secret.yaml is commented out by default so that plain-text credentials are
   # never accidentally committed and applied. Create the Secret separately using
   # one of the following approaches:
