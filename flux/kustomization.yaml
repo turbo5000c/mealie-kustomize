@@ -19,8 +19,10 @@ spec:
   prune: true
   wait: true
   timeout: 5m
-  dependsOn:
-    - name: infrastructure-configs
+# Enable if using the FluxCD-ezy repo
+#  dependsOn:
+#    - name: infrastructure-configs
+
   # IMPORTANT: Before enabling this Kustomization, ensure the database Secret
   # already exists in the mealie namespace. Create it with:
   #
