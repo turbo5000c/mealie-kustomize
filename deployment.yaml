@@ -20,7 +20,7 @@ spec:
           # Image version is managed by Renovate (renovate.json).
           # To pin manually, replace the tag with the desired version, e.g. v2.8.0.
           # Releases: https://github.com/mealie-recipes/mealie/releases
-          image: ghcr.io/mealie-recipes/mealie:v3.15.1
+          image: ghcr.io/mealie-recipes/mealie:v3.15.2
           ports:
             - containerPort: 9000
           env:
